@@ -86,7 +86,7 @@ data "aws_iam_policy_document" "bastion_permissions" {
                 "secretsmanager:ListSecretVersionIds"
             ]
             resources = [
-                data.aws_s3_bucket.rw[statement.value].arn,
+                data.aws_secretsmanager_secret_version.bastion[statement.key].arn,
             ]
         }
     }
