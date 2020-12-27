@@ -19,6 +19,16 @@ data "aws_subnet" "selected" {
     id = var.subnet_id
 }
 
+data "aws_s3_bucket" "ro" {
+    for_each = toset(var.s3_bucket_ro_list)
+    bucket   = each.key
+}
+
+data "aws_s3_bucket" "rw" {
+    for_each = toset(var.s3_bucket_rw_list)
+    bucket   = each.key
+}
+
 data "aws_kms_alias" "bastion" {
     for_each = toset(local.bastion_encryption_keys)
     name     = "alias/${each.key}"
@@ -66,14 +76,19 @@ data "aws_iam_policy_document" "bastion_permissions" {
         ]
         resources = ["*"]
     }
-    statement {
-        actions = [
-            "secretsmanager:GetResourcePolicy",
-            "secretsmanager:GetSecretValue",
-            "secretsmanager:DescribeSecret",
-            "secretsmanager:ListSecretVersionIds"
-        ]
-        resources = local.secrets_arn_list
+    dynamic "statement" {
+        for_each = data.aws_secretsmanager_secret_version.bastion
+        content {
+            actions = [
+                "secretsmanager:GetResourcePolicy",
+                "secretsmanager:GetSecretValue",
+                "secretsmanager:DescribeSecret",
+                "secretsmanager:ListSecretVersionIds"
+            ]
+            resources = [
+                data.aws_s3_bucket.rw[statement.value].arn,
+            ]
+        }
     }
     statement {
         actions   = ["kms:*"]

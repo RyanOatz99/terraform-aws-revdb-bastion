@@ -1,18 +1,15 @@
 locals {
     ami_id = var.ami != "" ? var.ami : data.aws_ami.ubuntu_bionic.image_id
+
     common_tags = {
         environment = var.environment
-        managed-by  = "terraform"
-        account     = data.aws_caller_identity.current.account_id
-        service     = var.service_name
-        region      = data.aws_region.current.name
+        managed-by = "terraform"
+        account = data.aws_caller_identity.current.account_id
+        service = var.service_name
+        region = data.aws_region.current.name
     }
-    secrets_arn_list = [
-    for secret in data.aws_secretsmanager_secret_version.bastion : secret.arn
-    ]
 
     bastion_encryption_keys = var.bastion_encryption_keys
-
 
     keys_arn_list = [
     for key in data.aws_kms_alias.bastion : key.arn
