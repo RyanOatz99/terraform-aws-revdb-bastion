@@ -1,0 +1,22 @@
+dist: xenial
+language: python
+sudo: required
+python:
+- '3.7'
+env:
+    global:
+        - AWS_DEFAULT_REGION="us-west-1"
+        - AWS_ACCESS_KEY_ID="$TF_VAR_aws_access_key_id"
+        - AWS_SECRET_ACCESS_KEY="$TF_VAR_aws_secret_access_key"
+install:
+    - make bootstrap
+    - install-terraform --terraform-version 0.12.24
+script:
+    - make test
+deploy:
+    skip_cleanup: true
+    provider: script
+    script: terraform-cd --module-version $TRAVIS_TAG revdb-terraform-modules
+    on:
+        branch: master
+        tags: true

@@ -3,5 +3,5 @@ output "public_bastion_ip" {
 }
 
 output "hostname" {
-    value = aws_route53_record.bastion[*].fqdn
+  value = aws_route53_record.bastion[*].fqdn
 }
