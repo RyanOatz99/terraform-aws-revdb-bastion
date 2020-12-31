@@ -1,6 +1,8 @@
 RevDB Bastion Module
 ================
 
+[![Build Status](https://travis-ci.com/revenants-cie/terraform-aws-revdb-bastion.svg?branch=master)](https://travis-ci.com/revenants-cie/terraform-aws-revdb-bastion)
+
 Description
 -----------
 
