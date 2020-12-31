@@ -1,6 +1,7 @@
     module "test_bastion" {
   source        = "../"
   dns_zones     = var.dns_zones
+        region = var.region
   subnet_id     = data.aws_subnet.selected.id
   environment   = var.environment
   service_name  = var.service_name
