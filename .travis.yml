@@ -6,6 +6,8 @@ python:
 env:
     global:
         - AWS_DEFAULT_REGION="us-west-1"
+        - AWS_ACCESS_KEY_ID="$TF_VAR_aws_access_key_id"
+        - AWS_SECRET_ACCESS_KEY="$TF_VAR_aws_secret_access_key"
 install:
     - make bootstrap
     - install-terraform --terraform-version 0.12.24
