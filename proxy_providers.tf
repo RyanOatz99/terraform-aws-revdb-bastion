@@ -1,7 +1,7 @@
 provider "aws" {
-    region  = var.region
+  region = var.region
 }
 provider "aws" {
-    region  = var.region
-  alias = "route_53_provider"
+  region = var.region
+  alias  = "route_53_provider"
 }
