@@ -12,9 +12,9 @@ This module creates a bastion ec2 instance. Configuration extends to:
 * Secrets and encryption keys
 * Hostname
 
-For a more information, check out our blog
+For a more information, check out our blog with an example on how to use the module.
 
-[https://revdb.io/blog](https://revdb.io/blog)
+[https://revdb.io/2020/12/31/how-to-create-a-bastion-host-on-aws-using-terraform/](https://revdb.io/2020/12/31/how-to-create-a-bastion-host-on-aws-using-terraform/)
 
 S3 buckets and secrets
 ----------------------
@@ -32,21 +32,31 @@ The basic, this assumes you have no S3 bucket, secret or other dependencies. Dep
 ```hcl
 module "bastion" {
   source = "revenants-cie/revdb-bastion/aws"
-  dns_zones = ["infrastructureascode.blog"]
   key_pair_name = "deployer"
   subnet_id = "subnet-0a957113a9566cf64"
 }
 
 output "hostname" {
-  value = module.bastion.hostname
+  value = module.bastion.public_bastion_ip
 }
+```
+
+Will result in the output like this
+
+```bash
+Apply complete! Resources: 2 added, 0 changed, 0 destroyed.
+
+Outputs:
+
+hostname = []
+ipaddress = 18.224.24.223
 ```
 
 Complex configuration might include a lot more, here is a hint:
 
 ```hcl
 module "bastion" {
-  source = "../../revdb/terraform-aws-revdb-bastion"
+  source = "revenants-cie/revdb-bastion/aws"
   dns_zones = ["infrastructureascode.blog"]
   key_pair_name = "deployer"
   subnet_id = "subnet-0a957113a9566cf64"
@@ -85,4 +95,5 @@ Outputs:
 hostname = [
   "bastion.infrastructureascode.blog",
 ]
+ipaddress = 18.224.24.223
 ```

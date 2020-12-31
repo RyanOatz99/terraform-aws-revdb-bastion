@@ -80,6 +80,7 @@ variable "root_volume_size" {
 variable "dns_zones" {
     description = "DNS zones where create domain name for the bastion server"
     type        = list
+    default = []
 }
 
 variable "hostname_prefix" {
