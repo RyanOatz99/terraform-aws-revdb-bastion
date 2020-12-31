@@ -6,10 +6,6 @@ python:
 env:
     global:
         - AWS_DEFAULT_REGION="us-west-1"
-before_install:
-- openssl aes-256-cbc -K $encrypted_bc03189cad35_key -iv $encrypted_bc03189cad35_iv
-  -in .env.tar.enc -out .env.tar -d
-- tar xvf .env.tar
 install:
     - make bootstrap
     - install-terraform --terraform-version 0.12.24
