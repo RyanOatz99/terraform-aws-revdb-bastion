@@ -1,3 +1,4 @@
 boto3 ~= 1.10
 pytest ~= 5.3
 terraform-ci ~= 1.2
+requests>=2.32.0 # not directly required, pinned by Snyk to avoid a vulnerability
